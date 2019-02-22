@@ -1,3 +1,5 @@
+#Convert the password and store it securely with the command on the following line
+#read-host -assecurestring | convertfrom-securestring | out-file C:\securedfile.txt
 #The script for login
 $Username = "admin@yourdomain.com"
 $password = cat  C:\securedfile.txt | convertto-securestring
