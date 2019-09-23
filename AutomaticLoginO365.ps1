@@ -1,8 +1,10 @@
-#Convert the password and store it securely with the command on the following line
-#read-host -assecurestring | convertfrom-securestring | out-file C:\securedfile.txt
-#The script for login
-$Username = "admin@yourdomain.com"
-$password = cat  C:\securedfile.txt | convertto-securestring
-$LiveCred = new-object -typename System.Management.Automation.PSCredential -argumentlist $username, $password
-$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://ps.outlook.com/powershell/ -Credential $LiveCred -Authentication Basic -AllowRedirection
+Import-Module MSOnline 
+$Cred = Import-Clixml $env:c:\.....\admin.xml
+Connect-MsolService -Credential $Cred
+$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://ps.outlook.com/powershell/ -Credential $Cred -Authentication Basic -AllowRedirection
 Import-PSSession $Session
+
+<#
+When the credential expire, you can save them with
+Get-Credential | Export-CliXml -Path c:\.....\admin.xml
+#>
