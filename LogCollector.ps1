@@ -1,8 +1,8 @@
 #Export System configuration data, Minidump folder and Event log files for troubleshooting
 
-#Credits to https://serverfault.com/users/511250/blayderunner123
-#			      https://github.com/piesecurity
-#			      if your name missing in the credits drop me a line
+#Credits to 		https://serverfault.com/users/511250/blayderunner123
+#			https://github.com/piesecurity
+#			if your name missing in the credits drop me a line
 
 
 [CmdletBinding()]
@@ -56,9 +56,19 @@ if (!(test-path $output))
 
 
 #Exporting System configuration
+
 Write-Verbose "Checking system configuration"
 	Get-ComputerInfo > $output\ComputerInfo.txt
 	Get-ComputerInfo | Select-Object -ExpandProperty OSHotFixes > $output\Hotfixes.txt
+
+
+#Exporting ACL configuration for application/s folder
+
+Write-Verbose "Checking Applicatin folder ACL configuration"
+$path = "c:\share" #define path to the shared folder
+$reportpath ="$output\ACL.csv" #define path to export permissions report
+#script scans for directories under shared folder and gets acl(permissions) for all of them
+dir -Recurse $path | where { $_.PsIsContainer } | % { $path1 = $_.fullname; Get-Acl $_.Fullname | % { $_.access | Add-Member -MemberType NoteProperty '.\Application Data' -Value $path1 -passthru }} | Export-Csv $reportpath
 
 
 #Archive the minidump folder
@@ -120,3 +130,6 @@ if ($IncludeAllEvtxFiles) {
         }
     }
 }
+
+
+
