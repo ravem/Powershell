@@ -85,6 +85,7 @@ if (!(test-path $output))
 Write-Host "Checking System Configuration"
 	Get-ComputerInfo > $output\ComputerInfo.txt
 	Get-ComputerInfo | Select-Object -ExpandProperty OSHotFixes > $output\Hotfixes.txt
+	Get-WmiObject -Class Win32_NetworkAdapterConfiguration -Filter IPEnabled=TRUE -ComputerName . | Select-Object -Property [a-z]* -ExcludeProperty IPX*,WINS* > $output\Network.txt
 
 
 #Exporting ACL configuration for application/s folder
