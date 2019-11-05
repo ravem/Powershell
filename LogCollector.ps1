@@ -19,6 +19,7 @@ Param (
 
 
 #Get the location path for the script execution
+
 $PSScriptRoot
 
 
@@ -61,15 +62,16 @@ else
  
 # Let's start
 
-
 Write-Host "Starting script..."
 
 
 #Changing working directory
+
 Set-Location -Path $PSScriptRoot
 
 
 #Checking if the output directory exists
+
 Write-Host "Checking For Output Directory "
 if (!(test-path $output)) 
 	{
