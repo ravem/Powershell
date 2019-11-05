@@ -83,8 +83,11 @@ if (!(test-path $output))
 #Exporting System configuration
 
 Write-Host "Checking System Configuration"
+	#Exporting general System configuration
 	Get-ComputerInfo > $output\ComputerInfo.txt
+	#Exporting Hotfixes detail
 	Get-ComputerInfo | Select-Object -ExpandProperty OSHotFixes > $output\Hotfixes.txt
+	#Exporting Network configuration
 	Get-WmiObject -Class Win32_NetworkAdapterConfiguration -Filter IPEnabled=TRUE -ComputerName . | Select-Object -Property [a-z]* -ExcludeProperty IPX*,WINS* > $output\Network.txt
 
 
