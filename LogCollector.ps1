@@ -1,4 +1,4 @@
-#Export system configuration data, installed software, Minidump folder and Event log files for troubleshooting
+#Export System configuration data, Minidump folder and Event log files for troubleshooting
 
 #Credits to 				https://blogs.msdn.microsoft.com/virtual_pc_guy
 #					https://github.com/piesecurity
@@ -82,13 +82,15 @@ if (!(test-path $output))
 
 #Exporting System configuration
 
-Write-Host "Checking System Configuration"
+Write-Host "Checking System and Network Configuration"
 #Exporting general System configuration
 Get-ComputerInfo > $output\ComputerInfo.txt
 #Exporting Hotfixes detail
 Get-ComputerInfo | Select-Object -ExpandProperty OSHotFixes > $output\Hotfixes.txt
 #Exporting Network configuration
-Get-WmiObject -Class Win32_NetworkAdapterConfiguration -Filter IPEnabled=TRUE -ComputerName . | Select-Object -Property [a-z]* -ExcludeProperty IPX*,WINS* > $output\Network.txt
+Get-Netadapter > $output\NetworkCards.txt
+Get-NetIPConfiguration  > $output\NetworkIpConfig.txt
+Get-NetRoute   > $output\NetworkRoutes.txt
 
 
 #Exporting list of installed software
