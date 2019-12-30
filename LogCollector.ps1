@@ -1,4 +1,4 @@
-#Export System configuration data, Minidump folder and Event log files for troubleshooting
+#Export system configuration data, installed software, Minidump folder and Event log files for troubleshooting
 
 #Credits to 				https://blogs.msdn.microsoft.com/virtual_pc_guy
 #					https://github.com/piesecurity
