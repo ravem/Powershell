@@ -1,3 +1,7 @@
+<#
+This script makes easier to login to O365 if you always forget th connection string like me.
+#>
+
 Import-Module MSOnline 
 $Cred = Import-Clixml $env:c:\.....\admin.xml
 Connect-MsolService -Credential $Cred
